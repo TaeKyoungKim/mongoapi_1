@@ -1,11 +1,14 @@
 var express = require('express')
 var mongoose = require('mongoose')
+require('dotenv').config()
+
 var app = express()
 
 
 app.use(express.urlencoded({extended:false}))
 
-mongoose.connect('mongodb+srv://root:1234@cluster0.tecvg.mongodb.net/mydb_7?retryWrites=true&w=majority', { useNewUrlParser: true , useUnifiedTopology: true })
+var mongo_url = process.env.MONGO_URL
+mongoose.connect(mongo_url , { useNewUrlParser: true , useUnifiedTopology: true })
 
 
 app.get('/', function(request , response){
@@ -14,7 +17,7 @@ app.get('/', function(request , response){
 })
 
 
-var port = 8080
+var port =process.env.PORT || 8080
 app.listen(port, function(){
   console.log(`Server is Starting at http://localhost:${port}`)
 } )
